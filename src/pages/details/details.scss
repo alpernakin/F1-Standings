@@ -1,0 +1,14 @@
+.details-container {
+    .go-back {
+        display: flex;
+        justify-content: center;
+
+        button {
+            cursor: pointer;
+        }
+    }
+
+    .list-container {
+        margin-top: 1em;
+    }
+}

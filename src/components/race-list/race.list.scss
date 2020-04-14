@@ -1,0 +1,54 @@
+.race-list-container {
+    $line_color: #D3D3D3;
+    $highlight_bg_color: #F8F8F8;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    // header + body row
+    .row {
+        display: flex;
+        padding: 1em 0;
+        border-bottom: 1px solid $line_color;
+
+        .race {
+            width: 25%;
+        }
+
+        .driver {
+            width: 25%;
+        }
+
+        .team {
+            width: 10%;
+        }
+
+        .nationality {
+            width: 15%;
+        }
+
+        .time {
+            width: 15%;
+        }
+    }
+
+    // body row
+    .race-list-item {
+        .cell {
+            padding: 0 .5em;
+        }
+    }
+
+    .highlight {
+        background-color: $highlight_bg_color;
+    }
+
+    // header row
+    .race-list-header {
+        .cell {
+            font-weight: bold;
+            padding: 0 .5em;
+        }
+    }
+}

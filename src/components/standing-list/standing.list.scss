@@ -1,0 +1,61 @@
+.standing-list-container {
+    $line_color: #D3D3D3;
+    $hover_bg_color: #F8F8F8;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    // header + body row
+    .row {
+        display: flex;
+        padding: 1em 0;
+        border-bottom: 1px solid $line_color;
+
+        .season {
+            width: 10%;
+        }
+
+        .driver {
+            width: 30%;
+        }
+
+        .team {
+            width: 20%;
+        }
+
+        .nationality {
+            width: 20%;
+        }
+
+        .points {
+            width: 10%;
+        }
+
+        .wins {
+            width: 10%;
+        }
+    }
+
+    // body row hover
+    .standing-list-item:hover {
+        background-color: $hover_bg_color;
+        font-weight: bold;
+    }
+
+    // body row
+    .standing-list-item {
+        cursor: pointer;
+        .cell {
+            padding: 0 .5em;
+        }
+    }
+
+    // header row
+    .standing-list-header {
+        .cell {
+            font-weight: bold;
+            padding: 0 .5em;
+        }
+    }
+}
