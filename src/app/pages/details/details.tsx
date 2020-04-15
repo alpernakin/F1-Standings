@@ -8,7 +8,6 @@ interface State {
     races: RaceItem[];
     winnerDriverId: string;
 }
-
 export default class Details extends Component<RouteComponentProps, State> {
 
     constructor(props: RouteComponentProps) {
@@ -27,16 +26,17 @@ export default class Details extends Component<RouteComponentProps, State> {
             let season = parseInt(seasonParam);
 
             this.setState({
-                winnerDriverId: f1Controller.getSeasonWinner(season)?.driverId || "",
-                races: (await f1Controller.getRaces(season)).map(x => ({
-                    name: x.name,
+                winnerDriverId: (await f1Controller.getSeasonWinner(season))?.driverId || "",
+                // map the data from data source
+                races: (await f1Controller.getRaces(season)).map(race => ({
+                    name: race.name,
                     winner: {
-                        id: x.winnerDriver.driverId,
-                        fullName: `${x.winnerDriver.givenName} ${x.winnerDriver.familyName}`,
-                        nationality: x.winnerDriver.nationality
+                        id: race.winnerDriver.driverId,
+                        fullName: `${race.winnerDriver.givenName} ${race.winnerDriver.familyName}`,
+                        nationality: race.winnerDriver.nationality
                     },
-                    team: x.winnerTeam.name,
-                    date: x.date
+                    team: race.winnerTeam.name,
+                    timestamp: race.timestamp
                 } as RaceItem))
             })
         }

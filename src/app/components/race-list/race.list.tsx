@@ -15,7 +15,7 @@ export interface RaceItem {
         nationality: string;
     };
     team: string;
-    date: Date;
+    timestamp: number;
 }
 
 interface Props {
@@ -61,7 +61,7 @@ class Item extends Component<ItemProps, {}> {
                     {this.props.item.winner.nationality}
                 </div>
                 <div className="time cell">
-                    {this.props.item.date}
+                    {new Date(this.props.item.timestamp).toUTCString()}
                 </div>
             </div>
         );

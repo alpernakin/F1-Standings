@@ -24,6 +24,6 @@ const raceSlice = createSlice({
     }
 });
 
-export const { add } = raceSlice.actions;
+export const { add: addRaces } = raceSlice.actions;
 
 export default raceSlice.reducer;

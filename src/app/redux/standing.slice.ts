@@ -24,6 +24,6 @@ const standingSlice = createSlice({
     }
 });
 
-export const { add } = standingSlice.actions;
+export const { add: addStandings } = standingSlice.actions;
 
 export default standingSlice.reducer;

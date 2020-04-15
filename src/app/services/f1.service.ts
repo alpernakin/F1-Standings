@@ -37,8 +37,7 @@ export class F1Service implements IF1Service {
             season: parseInt(race.season),
             name: race.raceName,
             round: parseInt(race.round),
-            time: race.time,
-            date: new Date(race.date),
+            timestamp: (new Date(`${race.date}T${race.time}`)).getTime(),
             winnerDriver: {
                 ...race.Results[0].Driver
             } as Driver,

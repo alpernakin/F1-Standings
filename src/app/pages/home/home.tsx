@@ -19,6 +19,7 @@ export default class Home extends Component<RouteComponentProps, State> {
 
     async componentDidMount() {
         this.setState({
+            // map the data from data source
             standings: (await f1Controller.getStandings()).map(standing => ({
                 season: standing.season,
                 winner: {
@@ -42,7 +43,8 @@ export default class Home extends Component<RouteComponentProps, State> {
         return (
             <div>{
                 this.state.standings ?
-                    (<StandingList items={this.state.standings} onItemClicked={event => this.onStandingItemClicked(event)} />) :
+                    (<StandingList items={this.state.standings}
+                        onItemClicked={event => this.onStandingItemClicked(event)} />) :
                     (<div>No data</div>)
             }</div>
         );

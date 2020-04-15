@@ -23,8 +23,7 @@ export interface Race {
     season: number;
     name: string;
     round: number;
-    date: Date;
-    time: string;
+    timestamp: number;
     winnerDriver: Driver;
     winnerTeam: Team;
 }
