@@ -1,14 +1,31 @@
 import React, { Component } from "react";
-import { Race } from "../../types/types";
 import './race.list.scss';
 
+/** 
+ * Accepted data type for the list.
+ * 
+ * A particular type for the component
+ * in order to provide isolation between presentational and smart components.
+ */
+export interface RaceItem {
+    name: string;
+    winner: {
+        id: string;
+        fullName: string;
+        nationality: string;
+    };
+    team: string;
+    date: Date;
+}
+
 interface Props {
-    items: Race[];
+    items: RaceItem[];
     seasonWinnerId: string;
 }
+/** Presentation component to display a list of races. */
 export default class RaceList extends Component<Props, {}> {
     render() {
-        let isHighlightedItem = (item: Race) => item.winnerDriver.driverId === this.props.seasonWinnerId;
+        let isHighlightedItem = (item: RaceItem) => item.winner.id === this.props.seasonWinnerId;
         return (
             <div className="race-list-container">
                 <Header />
@@ -21,7 +38,7 @@ export default class RaceList extends Component<Props, {}> {
 
 /** Item row properties */
 interface ItemProps {
-    item: Race;
+    item: RaceItem;
     key: string;
     highlight: boolean;
 }
@@ -35,16 +52,16 @@ class Item extends Component<ItemProps, {}> {
                     {this.props.item.name}
                 </div>
                 <div className="driver cell">
-                    {this.props.item.winnerDriver.givenName} {this.props.item.winnerDriver.familyName}
+                    {this.props.item.winner.fullName}
                 </div>
                 <div className="team cell">
-                    {this.props.item.winnerTeam.name}
+                    {this.props.item.team}
                 </div>
                 <div className="nationality cell">
-                    {this.props.item.winnerDriver.nationality}
+                    {this.props.item.winner.nationality}
                 </div>
                 <div className="time cell">
-                    {this.props.item.time}
+                    {this.props.item.date}
                 </div>
             </div>
         );

@@ -50,6 +50,7 @@ export class F1Service implements IF1Service {
         }) as Race);
     }
 }
+/** F1 service instance to make API requests. */
 export const f1ServiceInstance = new F1Service(requestInstance);
 
 /////////////////////////////////

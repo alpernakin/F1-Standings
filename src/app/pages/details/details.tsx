@@ -1,80 +1,59 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Race } from '../../types/types';
-import RaceList from '../../components/race-list/race.list';
+import RaceList, { RaceItem } from '../../components/race-list/race.list';
+import { f1Controller } from '../../controllers/f1.controller';
 import './details.scss';
-import store from '../../reducers/store';
-import { f1ServiceInstance } from '../../services/f1.service';
-import { add } from '../../reducers/race.slice';
 
 interface State {
-	races: Race[];
-	winnerDriverId: string;
+    races: RaceItem[];
+    winnerDriverId: string;
 }
 
 export default class Details extends Component<RouteComponentProps, State> {
 
-	constructor(props: RouteComponentProps) {
-		super(props);
+    constructor(props: RouteComponentProps) {
+        super(props);
 
-		this.state = {
-			races: [],
-			winnerDriverId: ""
-		}
-	}
+        this.state = {
+            races: [],
+            winnerDriverId: ""
+        }
+    }
 
-	async componentDidMount() {
-		let seasonParam = (this.props.match.params as any)["season"];
+    async componentDidMount() {
+        let seasonParam = (this.props.match.params as any)["season"];
+        // if the parameter passed
+        if (seasonParam) {
+            let season = parseInt(seasonParam);
 
-		// if the parameter passed
-		if (seasonParam) {
-			let season = parseInt(seasonParam);
+            this.setState({
+                winnerDriverId: f1Controller.getSeasonWinner(season)?.driverId || "",
+                races: (await f1Controller.getRaces(season)).map(x => ({
+                    name: x.name,
+                    winner: {
+                        id: x.winnerDriver.driverId,
+                        fullName: `${x.winnerDriver.givenName} ${x.winnerDriver.familyName}`,
+                        nationality: x.winnerDriver.nationality
+                    },
+                    team: x.winnerTeam.name,
+                    date: x.date
+                } as RaceItem))
+            })
+        }
+    }
 
-			this.setState({
-				winnerDriverId: this.getWinnerOfSeason(season),
-				races: await this.getRaces(season)
-			})
-		}
-	}
-
-	private getWinnerOfSeason(season: number): string {
-		let seasonStanding = store.getState().standings.find(x => x.season === season)
-		return seasonStanding?.winnerDriver?.driverId || "";
-	}
-
-	private async getRaces(season: number): Promise<Race[]> {
-		return new Promise<Race[]>(resolve => {
-			let races = store.getState().races.filter(x => x.season === season);
-			// if no race exists in the given season
-			if (!races || !races.length) {
-
-				f1ServiceInstance.getRaces(season)
-					.then(races => {
-
-						store.dispatch(add(races));
-
-						resolve(races);
-					});
-			}
-			else {
-
-				resolve(races);
-			}
-		});
-	}
-
-	render() {
-		return (
-			<div className="details-container">
-				<div className="go-back">
-					<button onClick={_ => this.props.history.goBack()}>BACK</button>
-				</div>
-				<div className="list-container">
-					{this.state.races && this.state.winnerDriverId ?
-						(<RaceList items={this.state.races} seasonWinnerId={this.state.winnerDriverId} />) :
-						(<div>No Data</div>)}
-				</div>
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div className="details-container">
+                <div className="go-back">
+                    <button onClick={_ => this.props.history.goBack()}>BACK</button>
+                </div>
+                <div className="list-container">
+                    {this.state.races && this.state.winnerDriverId ?
+                        (<RaceList items={this.state.races} seasonWinnerId={this.state.winnerDriverId} />) :
+                        (<div>No Data</div>)}
+                </div>
+            </div>
+        );
+    }
 }

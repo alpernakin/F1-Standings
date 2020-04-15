@@ -12,6 +12,7 @@ export interface IF1Service {
 
     /**
      * Returns standings for each season between 2005 - 2015.
+     * 
      * Requests winner standings for specific seasons.
      * @returns Standings for each season between 2005 - 2015.
      */
@@ -19,6 +20,7 @@ export interface IF1Service {
 
     /**
      * Returns race details for the given season.
+     * 
      * @param season The year of the season e.g. 2005.
      * @returns Race details for the given season.
      */
@@ -32,6 +34,7 @@ export interface IStorageService {
 
     /**
      * Sets the given object in cache.
+     * 
      * @param key Cache key.
      * @param item The object to cache.
      */
@@ -39,6 +42,7 @@ export interface IStorageService {
 
     /**
      * Returns an object by cache key.
+     * 
      * @param key 
      * @returns An object by cache key.
      */

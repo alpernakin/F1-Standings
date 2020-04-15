@@ -1,64 +1,50 @@
 import React, { Component } from 'react';
-import StandingList from '../../components/standing-list/standing.list';
-import store from '../../reducers/store';
-import { Standing } from '../../types/types';
-import { f1ServiceInstance } from '../../services/f1.service';
-import './home.scss';
-import { add } from '../../reducers/standing.slice';
+import StandingList, { StandingItem } from '../../components/standing-list/standing.list';
 import { RouteComponentProps } from 'react-router-dom';
+import { f1Controller } from '../../controllers/f1.controller';
+import './home.scss';
 
 interface State {
-	standings: Standing[];
+    standings: StandingItem[];
 }
-
 export default class Home extends Component<RouteComponentProps, State> {
 
-	constructor(props: RouteComponentProps) {
-		super(props);
+    constructor(props: RouteComponentProps) {
+        super(props);
 
-		this.state = {
-			standings: []
-		}
-	}
+        this.state = {
+            standings: []
+        }
+    }
 
-	async componentDidMount() {
-		this.setState({ standings: await this.getStandings() });
-	}
+    async componentDidMount() {
+        this.setState({
+            standings: (await f1Controller.getStandings()).map(standing => ({
+                season: standing.season,
+                winner: {
+                    id: standing.winnerDriver.driverId,
+                    fullName: `${standing.winnerDriver.givenName} ${standing.winnerDriver.familyName}`,
+                    nationality: standing.winnerDriver.nationality
+                },
+                team: standing.winnerTeam.name,
+                points: standing.points,
+                wins: standing.wins
+            } as StandingItem))
+        });
+    }
 
-	private async getStandings(): Promise<Standing[]> {
-		return new Promise(resolve => {
-			// first check the standings in the store
-			let standings = store.getState().standings;
-			// if there is no data
-			if (!standings || !standings.length) {
-				// then request data from the API
-				f1ServiceInstance.getStandings()
-					.then(standings => {
-						// save them in the store, for future requests
-						store.dispatch(add(standings));
-						// return data
-						resolve(standings);
-					});
-			}
-			else {
-				// return data
-				resolve(standings);
-			}
-		});
-	}
+    private onStandingItemClicked(season: number) {
+        // navigate to details of the season
+        this.props.history.push(`/details/${season}`);
+    }
 
-	private onStandingItemClicked(season: number) {
-		// navigate to details of the season
-		this.props.history.push(`/details/${season}`);
-	}
-
-	render() {
-		return (
-			<div>{
-				this.state.standings ?
-					(<StandingList items={this.state.standings} onItemClicked={event => this.onStandingItemClicked(event)} />) :
-					(<div>No data</div>)
-			}</div>
-		);
-	}
+    render() {
+        return (
+            <div>{
+                this.state.standings ?
+                    (<StandingList items={this.state.standings} onItemClicked={event => this.onStandingItemClicked(event)} />) :
+                    (<div>No data</div>)
+            }</div>
+        );
+    }
 }

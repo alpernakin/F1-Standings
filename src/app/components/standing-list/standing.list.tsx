@@ -1,11 +1,29 @@
 import React, { Component } from "react";
-import { Standing } from "../../types/types";
 import './standing.list.scss';
 
+/** 
+ * Accepted data type for the list.
+ * 
+ * A particular type for the component
+ * in order to provide isolation between presentational and smart components.
+ */
+export interface StandingItem {
+    season: number;
+    winner: {
+        id: string;
+        fullName: string;
+        nationality: string;
+    };
+    team: string;
+    points: number;
+    wins: number;
+}
+
 interface Props {
-    items: Standing[];
+    items: StandingItem[];
     onItemClicked: (season: number) => any;
 }
+/** Presentation component to display a list of standings / champions */
 export default class StandingList extends Component<Props, {}> {
     render() {
         return (
@@ -21,7 +39,7 @@ export default class StandingList extends Component<Props, {}> {
 
 /** Item row properties */
 interface ItemProps {
-    item: Standing;
+    item: StandingItem;
     key: string;
     onItemClicked: (season: number) => void;
 }
@@ -34,13 +52,13 @@ class Item extends Component<ItemProps, {}> {
                     {this.props.item.season}
                 </div>
                 <div className="driver cell">
-                    {this.props.item.winnerDriver.givenName} {this.props.item.winnerDriver.familyName}
+                    {this.props.item.winner.fullName}
                 </div>
                 <div className="team cell">
-                    {this.props.item.winnerTeam.name}
+                    {this.props.item.team}
                 </div>
                 <div className="nationality cell">
-                    {this.props.item.winnerDriver.nationality}
+                    {this.props.item.winner.nationality}
                 </div>
                 <div className="points cell">
                     {this.props.item.points}

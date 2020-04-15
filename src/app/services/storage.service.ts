@@ -17,6 +17,7 @@ class StorageService implements IStorageService {
         return itemText ? JSON.parse(itemText) : null;
     }
 }
+/** Storage service instance to access local storage. */
 export const storageInstance = new StorageService(window.localStorage);
 
 export const Keys = {
