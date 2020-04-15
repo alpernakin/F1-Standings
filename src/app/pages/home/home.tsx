@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import StandingList from '../../components/standing-list/standing.list';
-import store from '../../app/reducers/store';
+import store from '../../reducers/store';
 import { Standing } from '../../types/types';
-import { F1ServiceInstance } from '../../app/services/f1.service';
+import { f1ServiceInstance } from '../../services/f1.service';
 import './home.scss';
-import { add } from '../../app/reducers/standings';
+import { add } from '../../reducers/standing.slice';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface State {
@@ -32,7 +32,7 @@ export default class Home extends Component<RouteComponentProps, State> {
 			// if there is no data
 			if (!standings || !standings.length) {
 				// then request data from the API
-				F1ServiceInstance.getStandings()
+				f1ServiceInstance.getStandings()
 					.then(standings => {
 						// save them in the store, for future requests
 						store.dispatch(add(standings));

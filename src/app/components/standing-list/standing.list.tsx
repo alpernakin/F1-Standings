@@ -12,7 +12,8 @@ export default class StandingList extends Component<Props, {}> {
             <div className="standing-list-container">
                 <Header />
                 {this.props.items.map((item, index) =>
-                    <Item item={item} key={index.toString()} onItemClicked={event => this.props.onItemClicked(event)} />)}
+                    (<Item item={item} key={index.toString()}
+                        onItemClicked={event => this.props.onItemClicked(event)} />))}
             </div>
         );
     }

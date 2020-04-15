@@ -1,4 +1,4 @@
-import { Standing, Race } from "./types";
+import { Standing, Race } from "../types/types";
 
 export interface IRequestService {
 

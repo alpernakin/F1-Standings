@@ -1,4 +1,4 @@
-import { IStorageService } from "../../types/service.prototype";
+import { IStorageService } from "../prototype/service.prototype";
 
 class StorageService implements IStorageService {
 
@@ -17,7 +17,7 @@ class StorageService implements IStorageService {
         return itemText ? JSON.parse(itemText) : null;
     }
 }
-export const StorageInstance = new StorageService(window.localStorage);
+export const storageInstance = new StorageService(window.localStorage);
 
 export const Keys = {
     Standings: "standings",

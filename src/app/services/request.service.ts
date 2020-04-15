@@ -1,4 +1,4 @@
-import { IRequestService } from "../../types/service.prototype";
+import { IRequestService } from "../prototype/service.prototype";
 
 export class RequestService implements IRequestService {
 
@@ -15,4 +15,4 @@ export class RequestService implements IRequestService {
         });
     }
 }
-export const RequestInstance = new RequestService();
+export const requestInstance = new RequestService();

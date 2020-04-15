@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import './App.scss';
-import Home from './pages/home/home';
-import Details from './pages/details/details';
+import './app.scss';
+import Home from './app/pages/home/home';
+import Details from './app/pages/details/details';
 
 const appRoutes = [
     {

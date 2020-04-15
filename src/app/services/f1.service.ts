@@ -1,6 +1,6 @@
-import { RequestInstance } from "./request.service";
-import { IRequestService, IF1Service } from "../../types/service.prototype";
-import { Standing, Driver, Team, Race } from "../../types/types";
+import { requestInstance } from "./request.service";
+import { IRequestService, IF1Service } from "../prototype/service.prototype";
+import { Standing, Driver, Team, Race } from "../types/types";
 
 export class F1Service implements IF1Service {
 
@@ -50,7 +50,7 @@ export class F1Service implements IF1Service {
         }) as Race);
     }
 }
-export const F1ServiceInstance = new F1Service(RequestInstance);
+export const f1ServiceInstance = new F1Service(requestInstance);
 
 /////////////////////////////////
 // API RESPONSE DATA PROTOTYPE //

@@ -3,9 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Race } from '../../types/types';
 import RaceList from '../../components/race-list/race.list';
 import './details.scss';
-import store from '../../app/reducers/store';
-import { F1ServiceInstance } from '../../app/services/f1.service';
-import { add } from '../../app/reducers/races';
+import store from '../../reducers/store';
+import { f1ServiceInstance } from '../../services/f1.service';
+import { add } from '../../reducers/race.slice';
 
 interface State {
 	races: Race[];
@@ -48,7 +48,7 @@ export default class Details extends Component<RouteComponentProps, State> {
 			// if no race exists in the given season
 			if (!races || !races.length) {
 
-				F1ServiceInstance.getRaces(season)
+				f1ServiceInstance.getRaces(season)
 					.then(races => {
 
 						store.dispatch(add(races));
