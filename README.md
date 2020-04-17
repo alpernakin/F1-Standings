@@ -48,7 +48,7 @@ Services for API requests and caching. [Service container](https://github.com/al
 
 Common test mocks and dummy data.
 
-[**Types**]
+[**Types**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/types)
 
 Common object types.
 
