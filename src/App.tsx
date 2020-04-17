@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import './app.scss';
+import './App.scss';
 import Home from './app/pages/home/home';
 import Details from './app/pages/details/details';
 
@@ -23,7 +23,8 @@ export default class App extends Component<{}, {}> {
                     {/** NAV-BAR HERE */}
                     <Switch>
                         <Route exact path="/" render={() => (<Redirect to="/home"></Redirect>)} />
-                        {appRoutes.map(route => <Route path={route.path} component={route.component} />)}
+                        {appRoutes.map((route, index) =>
+                            (<Route key={index} path={route.path} component={route.component} />))}
                     </Switch>
                     {/** FOOTER HERE */}
                 </div>

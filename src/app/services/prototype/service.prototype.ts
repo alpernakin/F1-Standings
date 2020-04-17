@@ -1,4 +1,4 @@
-import { Standing, Race } from "../types/types";
+import { Standing, Race } from "../../types/types";
 
 export interface IRequestService {
 
@@ -33,18 +33,25 @@ export interface IF1Service {
 export interface IStorageService {
 
     /**
-     * Sets the given object in cache.
+     * Sets the given object in storage.
      * 
-     * @param key Cache key.
-     * @param item The object to cache.
+     * @param key Storage key.
+     * @param item The object to storage.
      */
     setItem<T>(key: string, item: T): void;
 
     /**
-     * Returns an object by cache key.
+     * Returns an object by storage key.
      * 
      * @param key 
-     * @returns An object by cache key.
+     * @returns An object by storage key.
      */
     getItem<T>(key: string): T;
+
+    /**
+     * Removes the item in the given `key`
+     * 
+     * @param key Storage key.
+     */
+    removeItem(key: string): void;
 }

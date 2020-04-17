@@ -19,18 +19,18 @@ export interface StandingItem {
     wins: number;
 }
 
-interface Props {
+interface ListProps {
     items: StandingItem[];
     onItemClicked: (season: number) => any;
 }
 /** Presentation component to display a list of standings / champions */
-export default class StandingList extends Component<Props, {}> {
+export default class StandingList extends Component<ListProps, {}> {
     render() {
         return (
             <div className="standing-list-container">
                 <Header />
                 {this.props.items.map((item, index) =>
-                    (<Item item={item} key={index.toString()}
+                    (<Item item={item} index={index}
                         onItemClicked={event => this.props.onItemClicked(event)} />))}
             </div>
         );
@@ -40,14 +40,14 @@ export default class StandingList extends Component<Props, {}> {
 /** Item row properties */
 interface ItemProps {
     item: StandingItem;
-    key: string;
+    index: number;
     onItemClicked: (season: number) => void;
 }
 /** Component for each item row */
 class Item extends Component<ItemProps, {}> {
     render() {
         return (
-            <div key={this.props.key} onClick={_ => this.props.onItemClicked(this.props.item.season)} className="row standing-list-item">
+            <div key={this.props.index} onClick={_ => this.props.onItemClicked(this.props.item.season)} className="row standing-list-item">
                 <div className="season cell">
                     {this.props.item.season}
                 </div>

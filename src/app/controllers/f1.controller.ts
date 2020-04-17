@@ -1,18 +1,27 @@
 import { Standing, Driver, Race } from "../types/types";
 import { addStandings } from "../redux/standing.slice";
 import { addRaces } from "../redux/race.slice";
-import { IF1Service } from "../prototype/service.prototype";
-import { f1ServiceInstance } from "../services/f1.service";
 import store from "../redux/store";
+import { EnhancedStore } from "@reduxjs/toolkit";
+import { F1Service } from "../services/f1.service";
+import { container } from "../services/container/service.container";
+import { IF1Service } from "../services/prototype/service.prototype";
 
 /**
  *  Controller to manage data flow between stores / api sources / cache and components.
  * 
  *  Here we combine different sources for data selection.
  */
-class F1Controller {
+export class F1Controller {
 
-    constructor(private service: IF1Service) { }
+    private service: IF1Service;
+    private store: EnhancedStore;
+
+    constructor() {
+        this.store = store;
+        // Please see src/app/services/container/service.container.ts for value registration.
+        this.service = container.get(F1Service);
+    }
 
     /**
      * Returns standings combining data from API and store
@@ -20,12 +29,12 @@ class F1Controller {
      */
     public async getStandings(): Promise<Standing[]> {
         // sort ascending by season
-        let sort = (standings: Standing[]) =>
-            [...standings].sort((x, y) => x.season > y.season ? 1 : -1);
+        let sort = (standings: Standing[]) => standings ?
+            [...standings].sort((x, y) => x.season > y.season ? 1 : -1) : [];
 
         return new Promise(resolve => {
             // first check the standings in the store
-            let standings = store.getState().standings;
+            let standings = this.store.getState().standings;
             // if there is no data
             if (!standings || !standings.length) {
                 // then request data from the API
@@ -33,7 +42,7 @@ class F1Controller {
                     .then(standings => {
                         let result = sort(standings);
                         // save them in the store, for future requests
-                        store.dispatch(addStandings(result));
+                        this.store.dispatch(addStandings(result));
                         // return data
                         resolve(result);
                     });
@@ -46,17 +55,18 @@ class F1Controller {
     }
 
     /**
-     * Returns races combining data from API and store
+     * Returns races combining data from API and store.
      * @param season The year of season 2005 - 2015
      * @returns An array of races
      */
     public async getRaces(season: number): Promise<Race[]> {
         // sort ascending by year
-        let sort = (races: Race[]) =>
-            [...races].sort((x, y) => x.timestamp > y.timestamp ? 1 : -1);
+        let sort = (races: Race[]) => races ?
+            [...races].sort((x, y) => x.timestamp > y.timestamp ? 1 : -1) : [];
 
         return new Promise<Race[]>(resolve => {
-            let races = store.getState().races.filter(x => x.season === season);
+            let races = this.store.getState().races
+                .filter((x: Race) => x.season === season);
             // if no race exists in the given season
             if (!races || !races.length) {
                 // then request them from the API
@@ -64,7 +74,7 @@ class F1Controller {
                     .then(races => {
                         let result = sort(races);
                         // add them in the store
-                        store.dispatch(addRaces(result));
+                        this.store.dispatch(addRaces(result));
                         // return the data
                         resolve(result);
                     });
@@ -90,4 +100,4 @@ class F1Controller {
         return seasonStanding?.winnerDriver;
     }
 }
-export const f1Controller = new F1Controller(f1ServiceInstance);
+export const f1Controller = new F1Controller();

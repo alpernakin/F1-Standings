@@ -1,11 +1,11 @@
-import { IStorageService } from "../prototype/service.prototype";
+import { IStorageService } from "./prototype/service.prototype";
 
-class StorageService implements IStorageService {
+export class StorageService implements IStorageService {
 
     private storage: Storage;
 
-    constructor(source: Storage) {
-        this.storage = source;
+    constructor(storage: Storage) {
+        this.storage = storage;
     }
 
     setItem<T>(key: string, item: T) {
@@ -16,9 +16,11 @@ class StorageService implements IStorageService {
         let itemText = this.storage.getItem(key);
         return itemText ? JSON.parse(itemText) : null;
     }
+
+    removeItem(key: string) {
+        this.storage.removeItem(key);
+    }
 }
-/** Storage service instance to access local storage. */
-export const storageInstance = new StorageService(window.localStorage);
 
 export const Keys = {
     Standings: "standings",

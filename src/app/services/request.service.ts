@@ -1,4 +1,4 @@
-import { IRequestService } from "../prototype/service.prototype";
+import { IRequestService } from "./prototype/service.prototype";
 
 export class RequestService implements IRequestService {
 

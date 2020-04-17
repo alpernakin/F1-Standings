@@ -18,19 +18,19 @@ export interface RaceItem {
     timestamp: number;
 }
 
-interface Props {
+interface ListProps {
     items: RaceItem[];
     seasonWinnerId: string;
 }
 /** Presentation component to display a list of races. */
-export default class RaceList extends Component<Props, {}> {
+export default class RaceList extends Component<ListProps, {}> {
     render() {
         let isHighlightedItem = (item: RaceItem) => item.winner.id === this.props.seasonWinnerId;
         return (
             <div className="race-list-container">
                 <Header />
                 {this.props.items.map((item, index) =>
-                    <Item item={item} key={index.toString()} highlight={isHighlightedItem(item)} />)}
+                    <Item item={item} index={index} highlight={isHighlightedItem(item)} />)}
             </div>
         );
     }
@@ -39,7 +39,7 @@ export default class RaceList extends Component<Props, {}> {
 /** Item row properties */
 interface ItemProps {
     item: RaceItem;
-    key: string;
+    index: number;
     highlight: boolean;
 }
 /** Component for each item row */
@@ -47,7 +47,7 @@ class Item extends Component<ItemProps, {}> {
     render() {
         let getHighlightClass = () => this.props.highlight ? " highlight " : " ";
         return (
-            <div key={this.props.key} className={"row race-list-item" + getHighlightClass()}>
+            <div key={this.props.index} className={"row race-list-item" + getHighlightClass()}>
                 <div className="race cell">
                     {this.props.item.name}
                 </div>
