@@ -1,44 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# F1-Standings
+
+ReactJs single page application with Redux. The application simply provides a UI for the F1 API ergast.com.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+###### `npm start`
 
-Runs the app in the development mode.<br />
+Runs the app in the development mode.
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+###### `npm test`
 
-### `npm test`
+Launches the test runner in the interactive watch mode.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Test files can be found alongside the implementation files with `test.ts` extension.
 
-### `npm run build`
+###### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production to the `build` folder.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## App Content
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[**Components**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/components)
 
-### `npm run eject`
+Presentational components, which are isolated from the rest of the application.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[**Controllers**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/controllers)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Controllers to manage data flow between components and avaiable data sources.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[**Pages**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/pages)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The route components, which are matched with a path, see `appRoutes` [app file](https://github.com/alpernakin/F1-Standings/blob/master/src/App.tsx)
 
-## Learn More
+[**Redux**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/redux)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Redux implementation takes place here. Actions and reducers are combined in `slice` files to simply the implementation with the help of [redux toolkit](https://redux-toolkit.js.org/)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[**Services**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/services)
+
+Services for API requests and caching. [Service container](https://github.com/alpernakin/F1-Standings/blob/master/src/app/services/container/service.container.ts) helps to deal with service dependencies throughout the application and tests.
+
+[**Test**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/test)
+
+Common test mocks and dummy data.
+
+[**Types**]
+
+Common object types.
+
+## Behaviour
+
+Home page simply displays F1 winner standings for each season from 2005 to 2015. If the user clicks on a list item, it routes to the details page. The details page displays a list of races in the selected season.
+
+The app caches the data to prevent unnecessary requests to the API. Please see [reducers](https://github.com/alpernakin/F1-Standings/tree/master/src/app/redux) and [f1 controller](https://github.com/alpernakin/F1-Standings/blob/master/src/app/controllers/f1.controller.ts)
