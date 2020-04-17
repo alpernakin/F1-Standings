@@ -34,11 +34,11 @@ Controllers to manage data flow between components and avaiable data sources.
 
 [**Pages**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/pages)
 
-The route components, which are matched with a path, see `appRoutes` [app file](https://github.com/alpernakin/F1-Standings/blob/master/src/App.tsx)
+The route components, which are matched with a path, see `appRoutes` [app file](https://github.com/alpernakin/F1-Standings/blob/master/src/App.tsx).
 
 [**Redux**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/redux)
 
-Redux implementation takes place here. Actions and reducers are combined in `slice` files to simply the implementation with the help of [redux toolkit](https://redux-toolkit.js.org/)
+Redux implementation takes place here. Actions and reducers are combined in `slice` files to simply the implementation with the help of [redux toolkit](https://redux-toolkit.js.org/).
 
 [**Services**](https://github.com/alpernakin/F1-Standings/tree/master/src/app/services)
 
@@ -56,4 +56,4 @@ Common object types.
 
 Home page simply displays F1 winner standings for each season from 2005 to 2015. If the user clicks on a list item, it routes to the details page. The details page displays a list of races in the selected season.
 
-The app caches the data to prevent unnecessary requests to the API. Please see [reducers](https://github.com/alpernakin/F1-Standings/tree/master/src/app/redux) and [f1 controller](https://github.com/alpernakin/F1-Standings/blob/master/src/app/controllers/f1.controller.ts)
+The app caches the data to prevent unnecessary requests to the API. Please see [reducers](https://github.com/alpernakin/F1-Standings/tree/master/src/app/redux) and [f1 controller](https://github.com/alpernakin/F1-Standings/blob/master/src/app/controllers/f1.controller.ts).
